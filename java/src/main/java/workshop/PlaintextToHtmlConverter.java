@@ -27,32 +27,15 @@ public class PlaintextToHtmlConverter {
         List<String> result = new ArrayList<>();
         List<String> convertedLine = new ArrayList<>();
         
-        for (int i=0;i<source.length();i++) {
-            switch (source.charAt(i)) {
-                case '<':
-                    convertedLine.add("&lt;");
-                    break;
-              case '>':
-                    convertedLine.add("&gt;");
-                    break;
-                case '&':
-                    convertedLine.add("&amp;");
-                    break;
-                case '\n':
-                    addANewLine(result,convertedLine);
-                    break;
-                default:
-            {
-                String characterToConvert = null;
-                pushACharacterToTheOutput(convertedLine,characterToConvert);
-            }
-            }
-        }
-        addANewLine(result,convertedLine);
+ String characterToConvert = stashNextCharacterAndAdvanceThePointer(source);
+        convertedLine.add(conversion(characterToConvert));
+        addANewLine(result, convertedLine);
         String finalResult = String.join("<br />", result);
         return finalResult;
     }
-
+ private String stashNextCharacterAndAdvanceThePointer(String source) {
+        return null;
+    }
    
     //stringfy convertedLine array and push into result
     //reset convertedLine
@@ -62,7 +45,9 @@ public class PlaintextToHtmlConverter {
         convertedLine = new ArrayList<>();
     }
 
-    private void pushACharacterToTheOutput(List<String> convertedLine,String characterToConvert) {
-        convertedLine.add(characterToConvert);
+   
+    
+      private String conversion(String character) {
+        return character == "<" ? "&lt:" : character == ">" ? "&gt;" : character == "&" ? "&amp;" : character;
     }
 }
