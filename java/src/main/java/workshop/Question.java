@@ -33,6 +33,8 @@ public class Question {
     }
     
 }
+    
+   
 public String nextquestion(int currentplace)
 {
 switch(currentplace %4){

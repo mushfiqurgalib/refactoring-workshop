@@ -21,7 +21,12 @@ public class TriviaGame {
     return players.get(currentPlayer);
     }
 
-
+   public boolean isPlayable() {
+        return (howManyPlayers() >= 2);
+    }
+         public int howManyPlayers() {
+        return players.size();
+    }
     public void add(String playerName) {
         String playername = null;
 
@@ -45,7 +50,9 @@ public class TriviaGame {
     }}
 
  
+Public String currentCategory{
 
+}
     public void roll(int roll) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + roll);
