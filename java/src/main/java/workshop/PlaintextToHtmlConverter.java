@@ -23,26 +23,29 @@ public class PlaintextToHtmlConverter {
 
     private String basicHtmlEncode(String source) {
         
-        int i = 0;
+       
         List<String> result = new ArrayList<>();
         List<String> convertedLine = new ArrayList<>();
-        String characterToConvert = stashNextCharacterAndAdvanceThePointer(source);
-        for (char characterToConvert : source.toCharArray()) {
-            switch (characterToConvert) {
-                case "<":
+        
+        for (int i=0;i<source.length();i++) {
+            switch (source.charAt(i)) {
+                case '<':
                     convertedLine.add("&lt;");
                     break;
-                case ">":
+              case '>':
                     convertedLine.add("&gt;");
                     break;
-                case "&":
+                case '&':
                     convertedLine.add("&amp;");
                     break;
-                case "\n":
+                case '\n':
                     addANewLine(result,convertedLine);
                     break;
                 default:
-                    pushACharacterToTheOutput(convertedLine,characterToConvert);
+            {
+                String characterToConvert = null;
+                pushACharacterToTheOutput(convertedLine,characterToConvert);
+            }
             }
         }
         addANewLine(result,convertedLine);
