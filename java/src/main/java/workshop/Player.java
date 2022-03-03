@@ -1,51 +1,70 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package workshop;
 
-/**
- *
- * @author user
- */
 public class Player {
-   private int purse=0;
-   private final String playername;
-    private int place=0;
-    private boolean inpenaltybox=false;
-    
-    public void move(int roll){
-        place+=roll;
-        place%=12;
+    private String Name;
+    private int place;
+    private int purse;
+    private boolean inPenaltyBox;
+    public Player()
+    {
+
+    }
+    public void setName(String Name)
+    {
+        this.Name=Name;
     }
 
-    public Player(String playername) {
-        this.playername = playername;
-    }
-    
-    public int purse(){
-        return purse;
-    }
-    public void addpurse(){
-        purse++;
-    }
-    
-    public boolean inpenaltybox(boolean b){
-    return inpenaltybox;
-    }
-    
-    public void isgettingoutofpenaltybox(){
-        inpenaltybox =!inpenaltybox;
+    public String getName()
+    {
+        return this.Name;
     }
 
-   public int place() {
+    public void setPlace(int place)
+    {
+        this.place=place;
+    }
+
+    public void addToPlace(int number)
+    {
+        number=this.place+number;
+    }
+
+    public void modPlace(int number)
+    {
+        this.place%=number;
+    }
+
+    public int getPlace()
+    {
         return place;
     }
 
-    boolean inpenaltybox() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setPurse(int purse)
+    {
+        this.purse=purse;
     }
 
-  
+    public Integer getPurse()
+    {
+        return this.purse;
+    }
+
+    public void setInPenaltyBox(boolean inPenaltyBox)
+    {
+        this.inPenaltyBox=inPenaltyBox;
+    }
+
+    public boolean isInPenaltyBox()
+    {
+        return this.inPenaltyBox;
+    }
+
+    public void increasePurseByOne()
+    {
+        this.purse++;
+    }
+
+    public boolean didPlayerWin(){
+        return !(getPurse()==6);
+    }
 }

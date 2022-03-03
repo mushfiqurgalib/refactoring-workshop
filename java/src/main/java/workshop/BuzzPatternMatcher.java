@@ -18,3 +18,4 @@ public class BuzzPatternMatcher implements PatternMatcher{
 		return "fizz";
 	}
 }
+
