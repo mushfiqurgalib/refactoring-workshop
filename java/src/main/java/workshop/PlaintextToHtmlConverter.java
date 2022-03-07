@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlaintextToHtmlConverter {
-    public String toHtml() throws Exception {
-        String text = read();
-        String htmlLines = basicHtmlEncode(text);
-        return htmlLines;
+   List <HtmlPatternMatcher> htmlPatternMatchers;
+
+    public PlaintextToHtmlConverter(List<HtmlPatternMatcher> htmlPatternMatchers) {
+            this.htmlPatternMatchers=htmlPatternMatchers;
     }
 
+    public String toHtml() throws Exception{
+        return basicHtmlEncode(read());
+    }
     protected String read() throws IOException {
         Path filePath = Paths.get("sample.txt");
         byte[] fileByteArray = Files.readAllBytes(filePath);
@@ -24,24 +27,20 @@ public class PlaintextToHtmlConverter {
         List<String> result = new ArrayList<>();
         List<String> convertedLine = new ArrayList<>();
         for (char characterToConvert : source.toCharArray()) {
-            switch (characterToConvert) {
-                case '<':
-                    convertedLine.add("&lt;");
-                    break;
-                case '>':
-                    convertedLine.add("&gt;");
-                    break;
-                case '&':
-                    convertedLine.add("&amp;");
-                    break;
-                case '\n':
+            for(HtmlPatternMatcher hMatcher:htmlPatternMatchers){
+                if (hMatcher.match(characterToConvert)){
+                    convertedLine.add(hMatcher.addHtmlSign());
+                }
+                else if(characterToConvert=='\n')
+                {
                     addANewLine(result,convertedLine);
-                    convertedLine = new ArrayList<>();
-                    break;
-                default:
-                    pushACharacterToTheOutput(convertedLine,String.valueOf(characterToConvert));
+                }
+                else{
+                    convertedLine.add(String.valueOf(characterToConvert));
+                }
             }
-        }
+            }
+        
         addANewLine(result,convertedLine);
         return String.join("<br />", result);
     }
@@ -54,7 +53,5 @@ public class PlaintextToHtmlConverter {
         result.add(line);
     }
 
-    private void pushACharacterToTheOutput(List<String> convertedLine,String characterToConvert) {
-        convertedLine.add(characterToConvert);
-    }
+  
 }
